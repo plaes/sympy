@@ -340,17 +340,13 @@ class WeylGroup(Basic):
         n = self.cartan_type.rank()
 
         if self.cartan_type.series in ('B', 'C'):
-            diag = "---".join("0" for i in range (1, n)) + "===0\n"
-            diag += "   ".join(str(i) for i in range (1, n+1))
-            return diag
+            return "%s===0\n%s" % ("---".join("0" * (n - 1)),
+                                   "   ".join(map(str, range (1, n+1))))
 
         if self.cartan_type.series == "F":
-            diag = "0---0===0---0\n"
-            diag += "   ".join(str(i) for i in range(1, 5))
-            return diag
+            return "0---0===0---0\n%s" % "   ".join(map(str, range(1, 5)))
 
         if self.cartan_type.series == "G":
-            diag = "0≡≡≡0\n1   2"
-            return diag
+            return "0≡≡≡0\n1   2"
 
         raise RuntimeError

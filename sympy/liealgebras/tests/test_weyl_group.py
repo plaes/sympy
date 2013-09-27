@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from sympy.liealgebras.weyl_group import WeylGroup
 from sympy.liealgebras.type_a import TypeA
 from sympy.liealgebras.type_b import TypeB
@@ -19,6 +20,7 @@ def test_weyl_group():
     assert d.matrix_form('r2*r3') ==  Matrix([[0, 0, 1, 0, 0], [1, 0, 0, 0, 0],
         [0, 1, 0, 0, 0], [0, 0, 0, 1, 0], [0, 0, 0, 0, 1]])
     assert d.element_order('r1*r2*r1*r3*r5') == 6
+    assert d.coxeter_diagram() == "0---0---0---0===0\n1   2   3   4   5"
     e = WeylGroup("D5")
     assert e.element_order('r2*r3*r5') == 4
     assert e.matrix_form('r2*r3*r5') == Matrix([[1, 0, 0, 0, 0], [0, 0, 0, 0, -1],
@@ -26,11 +28,14 @@ def test_weyl_group():
     f = WeylGroup("G2")
     assert f.element_order('r1*r2*r1*r2') == 3
     assert f.element_order('r2*r1*r1*r2') == 1
+    assert f.coxeter_diagram() == "0≡≡≡0\n1   2"
 
     assert f.matrix_form('r1*r2*r1*r2') == Matrix([[0, 1, 0], [0, 0, 1], [1, 0, 0]])
+
     g = WeylGroup("F4")
     assert g.matrix_form('r2*r3') == Matrix([[1, 0, 0, 0], [0, 1, 0, 0],
         [0, 0, 0, -1], [0, 0, 1, 0]])
+    assert g.coxeter_diagram() == "0---0===0---0\n1   2   3   4"
 
     assert g.element_order('r2*r3') == 4
     h = WeylGroup("E6")
