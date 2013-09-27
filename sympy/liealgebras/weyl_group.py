@@ -88,23 +88,17 @@ class WeylGroup(Basic):
         """
         n = self.cartan_type.rank()
         if self.cartan_type.series == "A":
-            return "S"+str(n+1) + ": the symmetric group acting on " + str(n+1) + " elements."
+            return "S%d: the symmetric group acting on %d elements." % (n + 1, n + 1)
 
         if self.cartan_type.series == "B" or self.cartan_type.series ==  "C":
-            return "The hyperoctahedral group acting on " + str(2*n) + " elements."
+            return "The hyperoctahedral group acting on %d elements." % (n * 2)
 
         if self.cartan_type.series == "D":
-            return "The symmetry group of the " + str(n) + "-dimensional demihypercube."
+            return "The symmetry group of the %d-dimensional demihypercube." % n
 
         if self.cartan_type.series == "E":
-            if n == 6:
-                return "The symmetry group of the 6-polytope."
-
-            if n == 7:
-                return "The symmetry group of the 7-polytope."
-
-            if n == 8:
-                return "The symmetry group of the 8-polytope."
+            if n in (6, 7, 8):
+                return "The symmetry group of the %d-polytope." % n
 
         if self.cartan_type.series == "F":
             return "The symmetry group of the 24-cell, or icositetrachoron."
