@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import itertools
 
 from sympy.core import Basic, Rational
 from sympy.core.numbers import igcd
@@ -123,12 +124,16 @@ class WeylGroup(Basic):
         4
         """
         if self.cartan_type.series == "G":
-            elts = list(weylelt)
-            reflections = elts[1::3]
-            m = self.delete_doubles(reflections)
-            while self.delete_doubles(m) != m:
-                m = self.delete_doubles(m)
-                reflections = m
+            reflections = list(weylelt[1::3])
+            # Drop repeated reflections
+            while True:
+                r = list(reflections)
+                for c, (x, y) in enumerate(itertools.izip(r, r[1:])):
+                    if x == y:
+                        reflections = r[:c] + r[c + 2:]
+                        break
+                if len(r) == len(reflections):
+                    break
             if len(reflections) % 2 == 1:
                 return 2
 
@@ -162,23 +167,6 @@ class WeylGroup(Basic):
             return order
 
         raise RuntimeError
-
-    def delete_doubles(self, reflections):
-        """
-        This is a helper method for determining the order of an element in the
-        Weyl group of G2.  It takes a Weyl element and if repeated simple reflections
-        in it, it deletes them.
-        """
-        counter = 0
-        copy = list(reflections)
-        for elt in copy:
-            if counter < len(copy)-1:
-                if copy[counter + 1] == elt:
-                    del copy[counter]
-                    del copy[counter]
-            counter += 1
-        return copy
-
 
     def matrix_form(self, weylelt):
         """
@@ -346,9 +334,10 @@ class WeylGroup(Basic):
         0---0===0
         1   2   3
         """
-        n = self.cartan_type.rank()
         if self.cartan_type.series in ('A', 'D', 'E'):
             return self.cartan_type.dynkin_diagram()
+
+        n = self.cartan_type.rank()
 
         if self.cartan_type.series in ('B', 'C'):
             diag = "---".join("0" for i in range (1, n)) + "===0\n"
