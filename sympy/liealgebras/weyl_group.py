@@ -56,7 +56,7 @@ class WeylGroup(Basic):
         if self.cartan_type.series == "A":
             return fac(n+1)
 
-        if self.cartan_type.series == "B" or self.cartan_type.series ==  "C":
+        if self.cartan_type.series in ('B', 'C'):
             return fac(n)*(2**n)
 
         if self.cartan_type.series == "D":
@@ -131,7 +131,7 @@ class WeylGroup(Basic):
                 order += 1
             return order
 
-        if self.cartan_type.series == "D":
+        if self.cartan_type.series in ('B', 'C', 'D'):
             a = self.matrix_form(weylelt)
             order = 1
             while a != eye(n):
@@ -169,20 +169,10 @@ class WeylGroup(Basic):
                 order = lcm / m
                 return order
 
-
         if self.cartan_type.series == 'F':
             a = self.matrix_form(weylelt)
             order = 1
             while a != eye(4):
-                a *= self.matrix_form(weylelt)
-                order += 1
-            return order
-
-
-        if self.cartan_type.series == "B" or self.cartan_type.series == "C":
-            a = self.matrix_form(weylelt)
-            order = 1
-            while a != eye(n):
                 a *= self.matrix_form(weylelt)
                 order += 1
             return order
@@ -335,8 +325,7 @@ class WeylGroup(Basic):
                     matrixform *= mat
             return matrixform
 
-
-        if self.cartan_type.series == 'B' or self.cartan_type.series == 'C':
+        if self.cartan_type.series in ('B', 'C'):
             matrixform = eye(n)
             for elt in reflections:
                 a = int(elt)
@@ -374,10 +363,10 @@ class WeylGroup(Basic):
         1   2   3
         """
         n = self.cartan_type.rank()
-        if self.cartan_type.series == "A" or self.cartan_type.series == "D" or self.cartan_type.series == "E":
+        if self.cartan_type.series in ('A', 'D', 'E'):
             return self.cartan_type.dynkin_diagram()
 
-        if self.cartan_type.series == "B" or self.cartan_type.series ==  "C":
+        if self.cartan_type.series in ('B', 'C'):
             diag = "---".join("0" for i in range (1, n)) + "===0\n"
             diag += "   ".join(str(i) for i in range (1, n+1))
             return diag
