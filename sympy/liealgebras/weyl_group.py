@@ -122,31 +122,6 @@ class WeylGroup(Basic):
         >>> b.element_order('r1*r4*r2')
         4
         """
-        n = self.cartan_type.rank()
-        if self.cartan_type.series == "A":
-            a = self.matrix_form(weylelt)
-            order = 1
-            while a != eye(n+1):
-                a *= self.matrix_form(weylelt)
-                order += 1
-            return order
-
-        if self.cartan_type.series in ('B', 'C', 'D'):
-            a = self.matrix_form(weylelt)
-            order = 1
-            while a != eye(n):
-                a *= self.matrix_form(weylelt)
-                order += 1
-            return order
-
-        if self.cartan_type.series == "E":
-            a = self.matrix_form(weylelt)
-            order = 1
-            while a != eye(8):
-                a *= self.matrix_form(weylelt)
-                order += 1
-            return order
-
         if self.cartan_type.series == "G":
             elts = list(weylelt)
             reflections = elts[1::3]
@@ -166,13 +141,22 @@ class WeylGroup(Basic):
                 else:
                     m = len(reflections) / 2
                     lcm = (6 * m)/ igcd(m, 6)
-                order = lcm / m
-                return order
+                return lcm / m
 
-        if self.cartan_type.series == 'F':
-            a = self.matrix_form(weylelt)
+        if self.cartan_type.series in ('ABCDEF'):
+            n = self.cartan_type.rank()
+            N = {
+                'A': n + 1,
+                'B': n,
+                'C': n,
+                'D': n,
+                'E': 8,
+                'F': 4
+            }
             order = 1
-            while a != eye(4):
+            a = self.matrix_form(weylelt)
+            E = eye(N[self.cartan_type.series])
+            while a != E:
                 a *= self.matrix_form(weylelt)
                 order += 1
             return order
