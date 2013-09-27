@@ -36,12 +36,7 @@ class WeylGroup(Basic):
         >>> c.generators()
         ['r1', 'r2', 'r3', 'r4']
         """
-        n = self.cartan_type.rank()
-        generators = []
-        for i in range(1, n+1):
-            reflection = "r"+str(i)
-            generators.append(reflection)
-        return generators
+        return ["r%d" % i for i in range(1, 1 + self.cartan_type.rank())]
 
     def group_order(self):
         """
