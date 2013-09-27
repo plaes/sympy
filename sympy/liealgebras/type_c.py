@@ -159,9 +159,7 @@ class TypeC(Standard_Cartan):
         """
         Returns the Lie algebra associated with C_n"
         """
-
-        n = self.n
-        return "sp(" + str(2*n) + ")"
+        return "sp(%d)" % (2 * self.n)
 
     def dynkin_diagram(self):
         n = self.n

@@ -159,9 +159,7 @@ class TypeB(Standard_Cartan):
         """
         Returns the Lie algebra associated with B_n
         """
-
-        n = self.n
-        return "so(" + str(2*n) + ")"
+        return "so(%d)" % (2 * self.n)
 
     def dynkin_diagram(self):
         n = self.n

@@ -154,8 +154,7 @@ class TypeA(Standard_Cartan):
         """
         Returns the Lie algebra associated with A_n
         """
-        n = self.n
-        return "su(" + str(n + 1) + ")"
+        return "su(%d)" % (self.n + 1)
 
     def dynkin_diagram(self):
         n = self.n
