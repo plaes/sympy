@@ -75,6 +75,8 @@ class WeylGroup(Basic):
         if self.cartan_type.series == "G":
             return 12
 
+        raise RuntimeError
+
     def group_name(self):
         """
         This method returns some general information about the Weyl group for
@@ -100,6 +102,8 @@ class WeylGroup(Basic):
 
         if self.cartan_type.series == "G":
             return "D6, the dihedral group of order 12, and symmetry group of the hexagon."
+
+        raise RuntimeError
 
     def element_order(self, weylelt):
         """
@@ -183,6 +187,8 @@ class WeylGroup(Basic):
                 order += 1
             return order
 
+        raise RuntimeError
+
     def delete_doubles(self, reflections):
         """
         This is a helper method for determining the order of an element in the
@@ -197,8 +203,6 @@ class WeylGroup(Basic):
                     del copy[counter]
                     del copy[counter]
             counter += 1
-
-
         return copy
 
 
@@ -348,7 +352,7 @@ class WeylGroup(Basic):
                     matrixform *= mat
             return matrixform
 
-
+        raise RuntimeError
 
     def coxeter_diagram(self):
         """
@@ -386,3 +390,5 @@ class WeylGroup(Basic):
         if self.cartan_type.series == "G":
             diag = "0≡≡≡0\n1   2"
             return diag
+
+        raise RuntimeError
